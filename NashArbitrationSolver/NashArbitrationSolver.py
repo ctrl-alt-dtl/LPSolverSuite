@@ -1,7 +1,8 @@
 #/------------------------------------------------------------/#
 #Name: Nash Arbitration Solver v1.1
 #Creator: David "Ty" Long
-#Date: 11 Dec 2011
+#Created: 11 Dec 2016
+#Last Edit: 07 Feb 2017
 #Dependencies: Pyhton 2.7 (Not tested with Python 3),
 #              Matplotlib, & Numpy
 #            Use 'easy_install' or 'pip' to download install or
