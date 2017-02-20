@@ -401,7 +401,6 @@ class MainView(tk.Frame):
             sqRow = None
             sqCol = None
             #subscript_0 = u'\u2080' #Future implementation of subscript 0
-            
             a1 = int(cellA1.get())
             a2 = int(cellA2.get())
             b1 = int(cellB1.get())
@@ -535,7 +534,7 @@ class MainView(tk.Frame):
         
         
         ########
-        #
+        # Init Display Frame
         ########
         
         #Frame Initialization
