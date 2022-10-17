@@ -1,9 +1,9 @@
 #/------------------------------------------------------------/#
-#Name: Nash Arbitration Solver v1.1
+#Name: Nash Arbitration Solver v1.2
 #Creator: David "Ty" Long
 #Created: 11 Dec 2016
-#Last Edit: 07 Feb 2017
-#Dependencies: Pyhton 2.7 (Not tested with Python 3),
+#Last Edit: 17 Oct 2022
+#Dependencies: Pyhton 2.7 (Updated for Python3 10/17/2022),
 #              Matplotlib, & Numpy
 #            Use 'easy_install' or 'pip' to download install or
 #            Download Matplotlib from: http://matplotlib.org/
@@ -11,22 +11,21 @@
 #/------------------------------------------------------------/#
 
 from __future__ import division
-import Tkinter as tk
-from Tkinter import StringVar 
-import tkMessageBox
+import tkinter as tk
+from tkinter import StringVar 
 import sys
 from fractions import Fraction
 import random
+from tkinter import messagebox
 import matplotlib
 from matplotlib.figure import Figure
 from matplotlib.lines import Line2D
 import numpy as np
 from numpy import vstack, ones
 from numpy.linalg import lstsq
-matplotlib.use("TkAgg")
+
 #import matplotlib.pyplot as plt # DEAD CODE
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg,\
-    NavigationToolbar2TkAgg
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 
 CLOCKWISE = -1
 COLLINEAR = 0
@@ -233,14 +232,14 @@ class MainView(tk.Frame):
             #Creating SQ line plot segment
             sqLineX = [(sqRow, sqCol), (maxValX, sqCol)]
             sqLineY = [(sqRow, sqCol), (sqRow, maxValY)]
-            (line1_xs, line1_ys) = zip(*sqLineX)
-            (line2_xs, line2_ys) = zip(*sqLineY)
+            (line1_xs, line1_ys) = list(zip(*sqLineX))
+            (line2_xs, line2_ys) = list(zip(*sqLineY))
             
             #Embedded Plot Graph
             points = ([a1, a2, b1, b2], [c1, d1, c2, d2])
-            points = zip(*points)
+            points = list(zip(*points))
             hull = jarvis(points)
-            hx, hy = zip(*hull)
+            hx, hy = list(zip(*hull))
             #The points of the last two locations counterclockwise
             fhx, fhy = zip(hull[3], hull[0])
             
@@ -266,19 +265,19 @@ class MainView(tk.Frame):
             intersectX = lineIntersection(self, paretoOptimalPoints, lineXset)
             intersectY = lineIntersection(self, paretoOptimalPoints, lineYset)
             try:
-                po_x1, po_y1 = zip(intersectX)
-                po_x2, po_y2 = zip(intersectY)
+                po_x1, po_y1 = list(zip(intersectX))
+                po_x2, po_y2 = list(zip(intersectY))
             except TypeError:
-                tkMessageBox.showerror("Error", \
+                messagebox.showerror("Error", \
                                                "Values Incorrect. " + \
                                                "Check Inputs!")
                 print("Invalid Inputs. Iteration not possible.")
-            pOptimalSet1, pOptimalSet2 = zip(intersectX,intersectY)
+            pOptimalSet1, pOptimalSet2 = list(zip(intersectX,intersectY))
             
             #Map the largest point on both Row X and Column Y axis
             #To use as a comparison tool for determining NFP
-            x1, y1= map(list, zip(max_x))
-            x2, y2 = map(list, zip(max_y))
+            x1, y1= map(list, list(zip(max_x)))
+            x2, y2 = map(list, list(zip(max_y)))
             
             #Negotiation Set
             if(sqRow > np.array([x1])):
@@ -292,7 +291,7 @@ class MainView(tk.Frame):
                 nfpCoord2 = intersectY
             
             nashFairPoint = nfpSolver(self, nfpCoord1, nfpCoord2)
-            nfp_x, nfp_y = zip(*nashFairPoint)
+            nfp_x, nfp_y = list(zip(*nashFairPoint))
             
             #Configure Widget
             fig = Figure(figsize=(5,5), dpi=100)
@@ -344,7 +343,7 @@ class MainView(tk.Frame):
             canvas.show()
             
             #Crash!! (if resized)
-            toolbar = NavigationToolbar2TkAgg(canvas, self)
+            toolbar = NavigationToolbar2Tk(canvas, self)
             toolbar.update()
             toolbar.grid(row=10, columnspan=15, column=1, sticky="w")
             #Major Crash!!
@@ -390,7 +389,7 @@ class MainView(tk.Frame):
             y_m_point = np.add(y1,y2)/2
             round_x_point = [round(xprec, 2) for xprec in x_m_point]
             round_y_point = [round(yprec, 2) for yprec in y_m_point]
-            nashFairPoint = zip(round_x_point, round_y_point)
+            nashFairPoint = list(zip(round_x_point, round_y_point))
             return nashFairPoint
         
         #############################################
@@ -447,7 +446,7 @@ class MainView(tk.Frame):
                         rowSqText = "X0: {:.2f}".format(sqRow)
                     else:
                         #Unlikely this will ever pop up
-                        tkMessageBox.showerror("Error", \
+                        messagebox.showerror("Error", \
                                                "Expected Values Do Not Match.\n" + \
                                                " ABS(EV(A+B) is > %d" % rowAbs )
             else:
@@ -491,7 +490,7 @@ class MainView(tk.Frame):
                         colSqText = "Y0: {:.2f}".format(sqCol)
                     else:
                         #Unlikely this will ever pop up
-                        tkMessageBox.showerror("Error", \
+                        messagebox.showerror("Error", \
                                                "Expected Values Do Not Match.\n" + \
                                                " ABS(EV(C+D) is > %d" % colAbs )
             else:
