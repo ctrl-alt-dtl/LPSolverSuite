@@ -3,11 +3,14 @@
 #Creator: David "Ty" Long
 #Created: 11 Dec 2016
 #Last Edit: 17 Oct 2022
-#Dependencies: Pyhton 2.7 (Updated for Python3 10/17/2022),
+#Dependencies: Pyhton 2.7 (Updated for Python 3.11 10/17/2022),
 #              Matplotlib, & Numpy
 #            Use 'easy_install' or 'pip' to download install or
 #            Download Matplotlib from: http://matplotlib.org/
 #            Download Numpy from: http://www.numpy.org/
+#            
+#            pip3.11 install matplotlib, numpy, tk
+#            Homebrew: brew install python-tk@3.11
 #/------------------------------------------------------------/#
 
 from __future__ import division
